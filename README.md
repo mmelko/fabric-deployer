@@ -1,5 +1,4 @@
 
-
 FABRIC-CLUSTER-DEPLOYER
 ============================
 
@@ -12,7 +11,12 @@ ssh server, wget, unzip  installed is required. Also Java, curl and telnet is re
 
 ###Configuration
 
-Container properties must be specified in  `containers.conf` file. Default location is `src/main/resources` but it's also possible to specify own location. 
+Containers properties must be specified in  `containers.conf` file. Default location is `src/main/resources` but it's also possible to specify own location. 
+Beside this you have to specify root container options in pom.xml:
+
+        <ssh.url>${ssh.url}</ssh.url>
+        <ssh.password>${ssh.password}</ssh.password>
+        <ssh.user>${ssh.user}</ssh.user>
 
 ###Usage
 
@@ -22,19 +26,37 @@ For install program type `mvn clean install`.
 
 For running: 
 
-`mvn exec:java -Dexec.args=`arguments
+`mvn exec:java -Dexec.args=arguments`
 
-Possible argumets
+
+Possible arguments
+
+
+` --all` - creating fabric from scratch. Downloading and running fuse etc.
     
-    ### --all - creating fabric from scratch. Downloading and running fuse etc.
+`--fuse` - prepare fuse, that means download it, unzip and run
+     
+`--fabric` - create fabric
+     
+`--ensemble` - initialize ensemble from containers.conf file
     
-    #### --fuse - prepare fuse, that means download it, unzip and run
+`--containers` initialize containers from containers.conf file
+     
+`--clean` all containers
     
-    #### --fabric - create fabric
-    #### --ensemble - initialize ensemble from containers.conf file
-    #### --containers initialize containers from containers.conf file
-    #### --clean all containers
-    
+
+###Examples:
+If you want create fabric-cluster from scratch use this command:
+
+`mvn exec:java -Dexec.args="--all"`
+
+If you want to just download fuse and create fabric use:
+
+`mvn exec:java -Dexec.args="--fuse --fabric"`
+
+If you want to kill fabric and all containers use :
+
+`mvn exec:java -Dexec.args="--clean"`
 
 
 
