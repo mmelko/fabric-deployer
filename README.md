@@ -17,7 +17,7 @@ Beside this you have to specify root container options in pom.xml:
         <ssh.password>${ssh.password}</ssh.password>
         <ssh.user>${ssh.user}</ssh.user>
         
-Root container represents main node, which with project is using for downloading fuse and creating fabric environment.
+Root container represents main node, which this project uses for downloading fuse and creating fabric environment.
 
 
 #### Containers configuration
@@ -34,7 +34,7 @@ and separator `;` for separating fields of property group.
  
         [child,ssh,ens];host;user;pass| ... |
         
- If is container specified as `child`, others fields are automaticly ignored.
+ If the container is specified as `child`, others fields are automaticly ignored.
  For adding container to ensemble we should specify it as `ens`
  
  __Container name:__
