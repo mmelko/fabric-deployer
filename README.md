@@ -1,8 +1,8 @@
-FABRIC-CLUSTER-DEPLOYER
+FABRIC-CLUSTER-DEPLOY-TOOL
 ============================
 
 
-This project allows deploying new fabric cluster to remote machines from scratch. Deployer can download fuse instalation, prepare it for running, create fabric, expanding ensemble and create ssh and child containers with specified profiles. 
+This project allows deploying new fabric cluster to remote machines from scratch. Project can download fuse installation, prepare it for running, create fabric, expanding ensemble and create ssh and child containers with specified profiles.
 
 ###Requierements 
 ssh server, wget, unzip  installed is required. Also Java, curl and telnet is required for running Jboss-fuse and fabric.
@@ -17,7 +17,7 @@ Beside this you have to specify root container options in pom.xml:
         <ssh.password>${ssh.password}</ssh.password>
         <ssh.user>${ssh.user}</ssh.user>
         
-Root container repesents main node, which with deployer is using for downloading fuse and creating fabric environment.
+Root container represents main node, which with project is using for downloading fuse and creating fabric environment.
 
 
 #### Containers configuration
