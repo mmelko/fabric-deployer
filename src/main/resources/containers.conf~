@@ -1,0 +1,23 @@
+#  sdf     ------------------------------------------------------------------------------------------------------
+#                               Containers properties file for creating containers
+#
+#       FILE FORMAT:
+# -----------------------------------------------------------------------------------------------------------------------------------
+# | container type    |    container name      |      profile properties      | broker properties                                    |
+# -----------------------------------------------------------------------------------------------------------------------------------
+# |     child         |   name  of container   |  profile-name; assignafter   |  brokername;networks;networkusername;network-password|
+# |ssh;host;user;pass |                        | profile-name;  false/true    |                                                      |
+# |ssh;host;user;pass |                                                                                                              |
+#  ----------------------------------------------------------------------------------------------------------------------------------
+# ENSEMBLE CONTAINERS
+#ens;server1;10.3.13.49;fuse;fuse;
+#ens;server2;10.3.13.200;fuse;fuse;;;
+#ens;server3;10.3.13.202;fuse;fuse;;;
+#ens;server4;10.3.13.210;fuse;fuse;;;
+#
+
+ssh;10.3.13.210;fuse;fuse|serverisko|mq-example;true|broker1;balbla;admin;admin
+#
+#SSH CONTAINERS
+#
+#ssh;child;;;;
