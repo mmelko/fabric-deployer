@@ -52,7 +52,6 @@ public class DeployFabric {
                 cloneContainers();
 
 
-
             } else {
                 if (args.contains("--clean"))
                     cleanContainers("src/main/resources/all.conf");
@@ -179,36 +178,34 @@ public class DeployFabric {
 
     public static boolean initSingleContainer(String containerName) throws Exception {
 
-      //  readContainersFromFile(0);
+        //  readContainersFromFile(0);
         Container single = null;
 
-        for(Container c:containers){
-            if(c.getName().equals(containerName)){
+        for (Container c : containers) {
+            if (c.getName().equals(containerName)) {
                 single = c;
                 break;
             }
         }
 
-        if( single == null){
-            System.out.println("Couldn't find container with name "+containerName);
+        if (single == null) {
+            System.out.println("Couldn't find container with name " + containerName);
             return false;
-        }
-
-        else {
+        } else {
             sshToRootContainer();
             System.out.println(sshClient.executeCommand(single.getCreateCommand()));
 
             //    Thread.sleep(10000);
             waitForProvision(single.getName());
-            if (single.getMQ()){
+            if (single.getMQ()) {
                 System.out.println(sshClient.executeCommand(single.createBroker()));
 
             }
 
             waitForProvision(single.getName());
-            if (single.getMQ()){
-                System.out.println(sshClient.executeCommand("profile-edit --pid org.fusesource.mq.fabric.server-"+single.getBrokerName()+"/network.consumerTTL=1 mq-broker-"+single.getBrokerGroup()+"."+single.getBrokerName()));
-                System.out.println(sshClient.executeCommand("profile-edit --pid org.fusesource.mq.fabric.server-"+single.getBrokerName()+"/network.messageTTL=1000 mq-broker-"+single.getBrokerGroup()+"."+single.getBrokerName()));
+            if (single.getMQ()) {
+                System.out.println(sshClient.executeCommand("profile-edit --pid org.fusesource.mq.fabric.server-" + single.getBrokerName() + "/network.consumerTTL=1 mq-broker-" + single.getBrokerGroup() + "." + single.getBrokerName()));
+                System.out.println(sshClient.executeCommand("profile-edit --pid org.fusesource.mq.fabric.server-" + single.getBrokerName() + "/network.messageTTL=1000 mq-broker-" + single.getBrokerGroup() + "." + single.getBrokerName()));
                 //   System.out.println(sshClient.executeCommand("profile-edit --pid org.fusesource.mq.fabric.server-"+c.getBrokerName()+"/network.decreaseNetworkConsumerPriority=true mq-broker-"+c.getBrokerGroup()+"."+c.getBrokerName()));
 
             }
@@ -244,7 +241,6 @@ public class DeployFabric {
         }
 
 
-
     }
 
     public static void sshToRootContainer() throws JSchException {
@@ -269,16 +265,18 @@ public class DeployFabric {
         sshClient.disconnect();
 
         for (Container c : allContainers) {
-            System.out.println("Connecting to .." + c.getHost());
-            sshClient.setHostname(c.getHost());
-            sshClient.init();
+            if (!c.isChild()) {
+                System.out.println("Connecting to .." + c.getHost());
+                sshClient.setHostname(c.getHost());
+                sshClient.init();
 
-            sshClient.executeCommand("pkill -9 -f karaf");
-            sshClient.executeCommand("pkill -9 -f java");
-            sshClient.executeCommand("rm -rf containers");
-            sshClient.disconnect();
-            //pkill -9 -f karaf
+                sshClient.executeCommand("pkill -9 -f karaf");
+                sshClient.executeCommand("pkill -9 -f java");
+                sshClient.executeCommand("rm -rf containers");
+                sshClient.disconnect();
+                //pkill -9 -f karaf
 
+            }
         }
     }
 
@@ -364,7 +362,7 @@ public class DeployFabric {
                 System.out.println("containers/" + c.getName() + i + "/fabric8-karaf-1.0.0.redhat-" + FUSE_BUILD + "/bin/client -u admin -p admin " + command);
             }
 
-           sshClient.disconnect();
+            sshClient.disconnect();
 
         }
     }
