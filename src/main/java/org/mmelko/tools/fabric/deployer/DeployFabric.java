@@ -54,7 +54,7 @@ public class DeployFabric {
 
             } else {
                 if (args.contains("--clean"))
-                    cleanContainers("src/main/resources/all.conf");
+                    cleanContainers("");
 
                 if (args.contains("--fuse"))
                     prepareFuse();
@@ -281,7 +281,7 @@ public class DeployFabric {
     }
 
 
-    private static boolean waitForProvision(String name) throws Exception {
+    public static boolean waitForProvision(String name) throws Exception {
 
         boolean result = false;
         int timeout = 120;
@@ -294,7 +294,7 @@ public class DeployFabric {
             String res = sshClient.executeCommand("fabric:container-list | grep " + name);
             if (!res.equals(buffer)) {
                 System.out.println(res);
-                buffer = res.toString();
+                buffer = String.copyValueOf(res.toCharArray());
             }
             if (res.contains("success"))
                 result = true;
