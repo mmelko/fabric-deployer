@@ -24,10 +24,10 @@ public class ContainerParser {
     public ContainerParser(String p) throws Exception {
         //  System.out.println(System.getProperty("system.path"));
         allContainers = new ArrayList<Container>();
-        if (CLUSTER_CLONES > 0){
+
 
             clones = new ArrayList<List<Container>>();
-
+        if (CLUSTER_CLONES > 0){
             for(int i=0;i<CLUSTER_CLONES;i++)
                 clones.add(new ArrayList<Container>());
         }
