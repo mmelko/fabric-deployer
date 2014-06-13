@@ -138,25 +138,28 @@ public class DeployFabric {
     }
 
     public static void initEnsemble() throws Exception {
-        sshToRootContainer();
-        // readContainersFromFile();
-        String contlist = "";
+        if (!ensembe.isEmpty()) {
+            sshToRootContainer();
+            // readContainersFromFile();
+            String contlist = "";
 
-        for (Container c : ensembe) {
-            System.out.println(sshClient.executeCommand(c.getCreateCommand()));
+            for (Container c : ensembe) {
+                System.out.println(sshClient.executeCommand(c.getCreateCommand()));
 
-            //  Thread.sleep(10000);
-            waitForProvision(c.getName());
-            contlist += " " + c.getName();
-            //  System.out.println(sshClient.executeCommand("container-list"));
+                //  Thread.sleep(10000);
+                waitForProvision(c.getName());
+                contlist += " " + c.getName();
+                //  System.out.println(sshClient.executeCommand("container-list"));
+            }
+
+            System.out.println(sshClient.executeCommand("ensemble-add --force" + contlist));
+            waitForProvision("root");
+
+
+            System.out.println(sshClient.executeCommand("container-list"));
+
+            sshClient.disconnect();
         }
-
-        System.out.println(sshClient.executeCommand("ensemble-add --force" + contlist));
-        waitForProvision("root");
-
-        System.out.println(sshClient.executeCommand("container-list"));
-
-        sshClient.disconnect();
     }
 
     public static void readContainersFromFile(String path, int clones) throws Exception {
